@@ -1,0 +1,97 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 4%; /* Cinza escuro/Preto */
+    --foreground: 0 0% 100%; /* Branco */
+
+    --card: 240 8% 8%; /* Cinza um pouco mais claro para cards */
+    --card-foreground: 0 0% 100%;
+
+    --popover: 240 8% 8%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 260 70% 60%; /* Roxo principal */
+    --primary-foreground: 0 0% 100%; /* Branco para texto em botões primários */
+
+    --secondary: 260 50% 45%; /* Roxo secundário */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 5% 15%; /* Cinza para texto muted */
+    --muted-foreground: 240 5% 65%; /* Cinza mais claro para texto muted */
+
+    --accent: 260 60% 50%; /* Roxo para acentos */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 70% 50%; /* Vermelho para destrutivo, pode manter ou ajustar */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 260 50% 30%; /* Borda roxa escura */
+    --input: 240 5% 12%; /* Input com fundo escuro */
+    --ring: 260 70% 65%; /* Roxo mais claro para anel de foco */
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+.minecraft-bg {
+  background: linear-gradient(135deg, #111111 0%, #1c1c1c 50%, #220033 100%); /* Preto para Roxo escuro */
+}
+
+.minecraft-card {
+  background: linear-gradient(145deg, rgba(128, 0, 128, 0.1) 0%, rgba(75, 0, 130, 0.15) 100%); /* Gradiente roxo sutil */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(160, 32, 240, 0.2); /* Borda roxa */
+}
+
+.minecraft-button {
+  background: linear-gradient(145deg, #8A2BE2, #4B0082); /* Roxo para Roxo escuro */
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+  transition: all 0.3s ease;
+}
+
+.minecraft-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+}
+
+.glow-effect {
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.3); /* Brilho roxo */
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #A020F0, #BA55D3, #9370DB); /* Gradiente de roxos */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.floating-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); } /* Ajustado para ser mais sutil */
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow {
+  from { box-shadow: 0 0 15px rgba(138, 43, 226, 0.2); } /* Brilho roxo sutil */
+  to { box-shadow: 0 0 25px rgba(138, 43, 226, 0.4); }
+}
