@@ -43,37 +43,34 @@ const Register = () => {
         return;
       }
 
-      const users = JSON.parse(localStorage.getItem('minecraft_users') || '[]');
-      
-      if (users.find(u => u.email === formData.email)) {
+      const response = await fetch('http://localhost:3001/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
         toast({
-          title: "Erro no registro",
-          description: "Este email já está em uso.",
-          variant: "destructive",
+          title: 'Erro no registro',
+          description: data.error || 'Não foi possível criar a conta.',
+          variant: 'destructive'
         });
         setLoading(false);
         return;
       }
 
-      const newUser = {
-        id: Date.now().toString(),
-        username: formData.username,
-        email: formData.email,
-        password: formData.password, // Em um app real, hashearia a senha
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${formData.username}&backgroundColor=8a2be2,4b0082,9370db`, // Cores roxas para avatar
-        bio: '',
-        portfolio: [],
-        posts: [],
-        createdAt: new Date().toISOString()
-      };
-
-      users.push(newUser);
-      localStorage.setItem('minecraft_users', JSON.stringify(users));
-
-      login(newUser);
+      login(data);
       toast({
-        title: "Conta criada com sucesso!",
-        description: `Bem-vindo, ${newUser.username}!`,
+        title: 'Conta criada com sucesso!',
+        description: `Bem-vindo, ${data.username}!`
       });
       navigate('/dashboard');
     } catch (error) {

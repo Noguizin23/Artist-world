@@ -31,23 +31,35 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const users = JSON.parse(localStorage.getItem('minecraft_users') || '[]');
-      const user = users.find(u => u.email === formData.email && u.password === formData.password);
+      const response = await fetch('http://localhost:3001/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        })
+      });
 
-      if (user) {
-        login(user);
+      const data = await response.json();
+
+      if (!response.ok) {
         toast({
-          title: "Login realizado com sucesso!",
-          description: `Bem-vindo de volta, ${user.username}!`,
+          title: 'Erro no login',
+          description: data.error || 'Email ou senha incorretos.',
+          variant: 'destructive'
         });
-        navigate('/dashboard');
-      } else {
-        toast({
-          title: "Erro no login",
-          description: "Email ou senha incorretos.",
-          variant: "destructive",
-        });
+        setLoading(false);
+        return;
       }
+
+      login(data);
+      toast({
+        title: 'Login realizado com sucesso!',
+        description: `Bem-vindo de volta, ${data.username}!`
+      });
+      navigate('/dashboard');
     } catch (error) {
       toast({
         title: "Erro no login",
